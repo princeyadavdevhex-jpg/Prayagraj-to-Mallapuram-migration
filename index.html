@@ -1,1 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ek Chhota Sa Sawal...</title>
+<style>
+  /* Basic Reset and Setup */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Ek romantic aur soft background gradient */
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: hidden; /* Button ko bahar jane se rokne ke liye */
+  }
 
+  /* Main Card Styling */
+  .card {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+    text-align: center;
+    max-width: 450px;
+    width: 90%;
+    position: relative;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+  }
+
+  h1 {
+    color: #ff4757;
+    font-size: 26px;
+    margin-bottom: 15px;
+  }
+
+  p {
+    color: #2f3542;
+    font-size: 17px;
+    margin-bottom: 35px;
+    line-height: 1.6;
+    font-weight: 500;
+  }
+
+  /* Buttons Layout */
+  .buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+    position: relative;
+    min-height: 120px;
+  }
+
+  button {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  button:active {
+    transform: scale(0.95);
+  }
+
+  /* Accept Button (The Only Choice) */
+  #yesBtn {
+    background: #ff4757;
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+    z-index: 2;
+  }
+
+  #yesBtn:hover {
+    background: #ff6b81;
+    box-shadow: 0 6px 20px rgba(255, 71, 87, 0.6);
+  }
+
+  /* Reject Button (The Running Button) */
+  #noBtn {
+    background: #747d8c;
+    color: white;
+    position: relative;
+    z-index: 5;
+    transition: left 0.2s ease, top 0.2s ease;
+  }
+
+  /* Hidden Success Message */
+  #successMessage {
+    display: none;
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  #successMessage h2 {
+    color: #2ed573;
+    font-size: 30px;
+    margin-bottom: 10px;
+  }
+
+  #successMessage p {
+    font-size: 18px;
+    color: #2f3542;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="card" id="mainCard">
+  <div id="questionContainer">
+    <h1>Ek important sawal... 🤔</h1>
+    <p>Sach sach batana... Kya aap migration pe jana chahte ho aur humare is pyare se group mein rehna chahte ho? Ya group se exit hona hai?</p>
+    
+    <div class="buttons-container">
+      <button id="yesBtn">Haan, mujhe accept hai! ❤️</button>
+      <button id="noBtn">Nahi, mujhe group se exit karna hai 😒</button>
+    </div>
+  </div>
+
+  <div id="successMessage">
+    <h2>Pata hi tha mujhe! 🎉🥰</h2>
+    <p>Maanne ke liye shukriya! Waise sach btau toh tumhare paas koi aur rasta tha hi nahi. Welcome back to the group, ab migration shuru hogi! 🚀</p>
+  </div>
+</div>
+
+<script>
+  const noBtn = document.getElementById('noBtn');
+  const yesBtn = document.getElementById('yesBtn');
+  const questionContainer = document.getElementById('questionContainer');
+  const successMessage = document.getElementById('successMessage');
+
+  // Logic to make the 'No' button run away
+  function bhagJaoButton(e) {
+    // Prevent default click/touch to stop accidental clicks on mobile
+    if (e) e.preventDefault();
+
+    // Browser window ki width aur height nikalna
+    const maxX = window.innerWidth - noBtn.offsetWidth;
+    const maxY = window.innerHeight - noBtn.offsetHeight;
+
+    // Random X aur Y positions generate karna (safe zone ke andar)
+    const randomX = Math.floor(Math.random() * (maxX - 20)) + 10;
+    const randomY = Math.floor(Math.random() * (maxY - 20)) + 10;
+
+    // Button ki position ko fixed karke usko nayi jagah bhej dena
+    noBtn.style.position = 'fixed';
+    noBtn.style.left = randomX + 'px';
+    noBtn.style.top = randomY + 'px';
+  }
+
+  // Desktop ke liye hover event
+  noBtn.addEventListener('mouseover', bhagJaoButton);
+  
+  // Mobile ke liye touch event (taki touch karte hi bhag jaye)
+  noBtn.addEventListener('touchstart', bhagJaoButton);
+
+  // Jab user Finally haar maan kar 'Haan' par click kare
+  yesBtn.addEventListener('click', () => {
+    questionContainer.style.display = 'none';
+    successMessage.style.display = 'block';
+  });
+</script>
+
+</body>
+  </html>
+  
